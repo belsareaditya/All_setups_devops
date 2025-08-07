@@ -27,15 +27,16 @@ sudo apt-get install jenkins -y
 
 
 ## Copy the path /var/lib/jenkins/secrets/initialAdminPassword on Jenkins-Master to get the password.
+
 ```bash
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-```bash
+```
 
 
 ```bash
 sudo apt update -y
 sudo apt install fontconfig openjdk-17-jre -y
-```bash
+```
 
 #
 
