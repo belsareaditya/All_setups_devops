@@ -65,11 +65,13 @@ ssh-keygen
 ```bash
 cat id_ed25519 
   ```
-
-<img width="1920" height="769" alt="Jenkins In One Shot _ DevOps Production CICD Pipelines  Hindi  48-30 screenshot" src="https://github.com/user-attachments/assets/6e593eb4-d3f5-494a-8000-3bcb335babaa" />
-
 #
 ## Now move to directory where your ssh keys are generated and copy the content of public key and paste to authorized_keys file of the Jenkins worker node.
+
+<img width="944" height="380" alt="image" src="https://github.com/user-attachments/assets/8c982323-c6c4-4f88-b13a-720cde55b763" />
+
+## Now Start Creating Jenkins-Worker Node Data
+
 #
   - <b>Now, go to the jenkins master and navigate to <mark>Manage jenkins --> Nodes</mark>, and click on Add node </b>
     - <b>name:</b> Node
