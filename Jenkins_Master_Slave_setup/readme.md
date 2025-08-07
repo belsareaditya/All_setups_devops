@@ -33,23 +33,21 @@ sudo apt-get install jenkins -y
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 
+## Jenkins-worker">Setting up jenkins worker node
+  
+## Create a new EC2 instance (Jenkins Worker) with 2CPU, 8GB of RAM (t2.large) and 29 GB of storage and install java on it
 
 ```bash
 sudo apt update -y
 sudo apt install fontconfig openjdk-17-jre -y
 ```
 
-#
 
 
 
-#
-## Jenkins-worker">Setting up jenkins worker node
-  
-## Create a new EC2 instance (Jenkins Worker) with 2CPU, 8GB of RAM (t2.large) and 29 GB of storage and install java on it
+
+
+
  
 
-  ```bash
-  sudo apt update -y
-  sudo apt install fontconfig openjdk-17-jre -y
-  ```
+`
