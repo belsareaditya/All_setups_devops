@@ -39,7 +39,8 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 ## 6. Jenkins-worker">Setting up jenkins worker node
 
-#
+<img width="944" height="296" alt="image" src="https://github.com/user-attachments/assets/ea5073bf-5da5-4296-9907-28f7a1749f88" />
+
 #
 
 ## 7. Create a new EC2 instance (Jenkins Worker) with 2CPU, 8GB of RAM (t2.large) and 29 GB of storage and install java on it
@@ -58,11 +59,11 @@ cd ~/.ssh | ls
 
  ## generate ssh keys (Master machine) to setup jenkins master-slave
   ```bash
-  ssh-keygen
+ssh-keygen
   ```
 
 ```bash
-  cat id_ed25519 
+cat id_ed25519 
   ```
 
 <img width="1920" height="769" alt="Jenkins In One Shot _ DevOps Production CICD Pipelines  Hindi  48-30 screenshot" src="https://github.com/user-attachments/assets/6e593eb4-d3f5-494a-8000-3bcb335babaa" />
@@ -86,7 +87,7 @@ cd ~/.ssh | ls
   - And your jenkins worker node is added
   ![image](https://github.com/user-attachments/assets/cab93696-a4e2-4501-b164-8287d7077eef)
 
-# 
+## Restart the Jenkins to Properly sync the Node configurations. 
 
 
 
