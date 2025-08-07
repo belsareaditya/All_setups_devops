@@ -86,10 +86,11 @@ cat id_ed25519
     - <b>Host Key Verification Strategy:</b> Non verifying Verification Strategy
     - <b>Availability:</b> Keep this agent online as much as possible
 #
-  - And your jenkins worker node is added
+## And your jenkins worker node is added
+
   ![image](https://github.com/user-attachments/assets/cab93696-a4e2-4501-b164-8287d7077eef)
 
-## Restart the Jenkins to Properly sync the Node configurations. 
+##    Restart the Jenkins to Properly sync the Node configurations. 
 
 
 
