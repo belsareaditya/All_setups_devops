@@ -21,8 +21,22 @@ sudo apt-get install jenkins -y
 ## Go the Jenkins-Master security group and Open port 8080.
 <img width="944" height="331" alt="image" src="https://github.com/user-attachments/assets/35038378-64cc-4103-9dc6-97ba8f922c2e" />
 
-- 
-- <b>Now, access Jenkins Master on the browser on port 8080 and configure it</b>.
+ 
+## Now, access Jenkins Master on the browser on port 8080 and configure it.
+<img width="944" height="372" alt="image" src="https://github.com/user-attachments/assets/6a0adac6-c7e1-44c4-af39-403b87f16c8c" />
+
+
+## Copy the path /var/lib/jenkins/secrets/initialAdminPassword on Jenkins-Master to get the password.
+```bash
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```bash
+
+
+```bash
+sudo apt update -y
+sudo apt install fontconfig openjdk-17-jre -y
+```bash
+
 #
 
 
