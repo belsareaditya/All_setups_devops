@@ -1,6 +1,6 @@
 <img width="940" height="228" alt="image" src="https://github.com/user-attachments/assets/766790d8-b97c-434b-8d59-090a6744aa21" />
 
-# Create Two Instance one for Jenkins-Master and another for Jenkins-agents.
+## Create Two Instance one for Jenkins-Master and another for Jenkins-agents.
 #
 - <b id="Jenkins">Install and configure Jenkins (Master machine)</b>
 ```bash
@@ -18,7 +18,7 @@ sudo apt-get update -y
 sudo apt-get install jenkins -y
 ```
 
-- <b>Go the Jenkins-Master security group and Open port 8080</b>.
+## Go the Jenkins-Master security group and Open port 8080.
 <img width="944" height="331" alt="image" src="https://github.com/user-attachments/assets/35038378-64cc-4103-9dc6-97ba8f922c2e" />
 
 - 
