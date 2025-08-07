@@ -17,6 +17,11 @@ echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
 sudo apt-get update -y
 sudo apt-get install jenkins -y
 ```
+
+- <b>Go the Jenkins-Master security group and Open port 8080</b>.
+<img width="944" height="331" alt="image" src="https://github.com/user-attachments/assets/35038378-64cc-4103-9dc6-97ba8f922c2e" />
+
+- 
 - <b>Now, access Jenkins Master on the browser on port 8080 and configure it</b>.
 #
 
