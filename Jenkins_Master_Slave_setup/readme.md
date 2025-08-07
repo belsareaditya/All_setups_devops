@@ -77,11 +77,11 @@ cat id_ed25519
     - <b>name:</b> Node
     - <b>type:</b> permanent agent
     - <b>Number of executors:</b> 2
-    - Remote root directory
-    - <b>Labels:</b> Node
-    - <b>Usage:</b> Only build jobs with label expressions matching this node
-    - <b>Launch method:</b> Via ssh
-    - <b>Host:</b> \<public-ip-worker-jenkins\>
+    - Remote root directory : /home/ubuntu
+    - <b>Labels:</b> Vinod
+    - <b>Usage:</b> </mark> Used this node as much as possible </mark>
+    - <b>Launch method:</b> Launch agent Via ssh
+    - <b>Host:</b> \<public-ip-</mark>Jenkins-Agent</mark>\>
     - <b>Credentials:</b> <mark>Add --> Kind: ssh username with private key --> ID: Worker --> Description: Worker --> Username: root --> Private key: Enter directly --> Add Private key</mark>
     - <b>Host Key Verification Strategy:</b> Non verifying Verification Strategy
     - <b>Availability:</b> Keep this agent online as much as possible
