@@ -265,14 +265,15 @@ Note: In Inventory file, we can mention Private_IP Address or Hostname also.
 
 ### Sample Inventory File :
 
+<img width="1411" height="416" alt="image" src="https://github.com/user-attachments/assets/9c4fec89-3dd1-43ae-823c-ce520c6cb525" />
+
+# Host file includes the IP Address of Respective VM , Connect the VM with public and private Key to Used .
 ```
-#Blank lines are ignore
 
 ## Ungrouped hosts are specifying before any group header like below 
 
-<img width="1411" height="416" alt="image" src="https://github.com/user-attachments/assets/9c4fec89-3dd1-43ae-823c-ce520c6cb525" />
 
-# Host file inclues the IP Address of Respective VM , Connect the VM with public and private Key to Used.
+
 192.168.122.1    #Private_IP
 192.168.122.2
 192.168.122.3
