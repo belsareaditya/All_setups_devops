@@ -580,56 +580,6 @@ ansible-playbook help
 ```
 
 
-### Why Ansible Roles :
-
-
-Ansible roles is efficient way to writing ansible playbook that will only improve your efficiency to write complex playbooks.
-
-Best ex, Lets say i want to configure a kubernetes using ansible. so, it will have close to some 50 to 60 tasks and we have lot of variable and lots of parameters you have certificate you have secrets that you have to configure while creating the kubernetes cluster. So, for that very own reason if you try to do it with Roles like we can segregate each and everything and you can properly structure your ansible playbooks. So, thats why the concept of roles is introduced.
-
-$ mkdir folder
-
-$ cd folder
-
-$ ansible-galaxy role init kubernetes
-
--  Role kubernetes was created successfully.
-
-if you give $ ls 
-
-there is a folder called `kubernetes`
-
-$ ls kubernetes 
-
-we can see bunch of files that created. This is the concept roles.
-Using this files and folders, we can structure ansible playbooks.
-
-Files and folders inside roles :
-
-```
-meta : used to write some meta data info like liscence, author, role description.. etc
-
-defaults :  default files we can store 
- 
-vars : store the variable 
-
-tests : used add some unit tests
-
-handlers : 
-
-tasks : 
-
-readme.md :
-
-files : 
-
-templates :
-```
-
-Whenever you want to write some complicated playbooks. start using ansible-galaxy command to create roles. 
-
-If you create roles, we can write structured and efficient ansible playbooks.
-
 
 
 
