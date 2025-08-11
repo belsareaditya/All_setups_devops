@@ -64,13 +64,13 @@ Chef & Puppet Tools work based on 'Pull' Mechanism.
 By default, Ansible runs tasks in parallel, not one-by-one.
 
 
-• Default parallelism is 5 hosts at a time (forks = 5).
+• By Default Ansible can update 5 hosts(Vm 's) at a time in parallels (forks = 5).
 
 • You can make it run on all 10 VMs at once by adding:
 
-•Without -f 10 → it will run on 5 VMs, then the next 5.
+• Without -f 10 → it will run on 5 VMs, then the next 5.
 
-•With -f 10 → it will run on all 10 VMs at the same time.
+• With -f 10 → it will run on all 10 VMs at the same time.
 
 ```bash
 ansible-playbook -i hosts script.yml -f 10
