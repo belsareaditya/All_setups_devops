@@ -76,10 +76,12 @@ By default, Ansible runs tasks in parallel, not one-by-one.
 ansible-playbook -i hosts script.yml -f 10
 ```
 
-## Ansible Workflow Diagram 
-========
+## <mark> Ansible Workflow Diagram <mark>
 
-<img width="2608" height="1452" alt="Ansible Full Course _ Zero to Hero 30-48 screenshot" src="https://github.com/user-attachments/assets/e671a479-a0c2-4f93-9b22-50ecb3d537d2" />
+#
+
+<img width="2589" height="1452" alt="Ansible Full Course _ Zero to Hero 30-48 screenshot" src="https://github.com/user-attachments/assets/41b71567-b376-457a-9668-51ba0a986a02" />
+
 
 Ansible :
 ========
