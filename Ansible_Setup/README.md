@@ -452,10 +452,10 @@ Giving permissions to Inventory and Root by removing '#'
 <img width="300" height="300" alt="Ansible Full Course _ Zero to Hero 45-30 screenshot" src="https://github.com/user-attachments/assets/bd1fbd73-705f-4233-a716-277e749516b3" />
 
 
-<img width="2173" height="868" alt="Ansible Full Course _ Zero to Hero 45-52 screenshot" src="https://github.com/user-attachments/assets/c9cdd4cd-1c1c-40ae-ab9e-39f0a7f4430f" />
+<img width="700" height="700" alt="Ansible Full Course _ Zero to Hero 45-52 screenshot" src="https://github.com/user-attachments/assets/c9cdd4cd-1c1c-40ae-ab9e-39f0a7f4430f" />
 
 
-<img width="1763" height="1353" alt="Ansible Full Course _ Zero to Hero 45-35 screenshot" src="https://github.com/user-attachments/assets/0cb114e6-4385-4aa0-b7e4-2956cd894266" />
+<img width="700" height="700" alt="Ansible Full Course _ Zero to Hero 45-35 screenshot" src="https://github.com/user-attachments/assets/0cb114e6-4385-4aa0-b7e4-2956cd894266" />
 
 ## YAML (Yet Another Markup Language) :
 
