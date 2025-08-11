@@ -45,6 +45,12 @@ If we have 100's of machines then Manual Configration Management will be difficu
 Ansible work based on 'Push' Mechanism
 
 Chef & Puppet Tools work based on 'Pull' Mechanism.
+# Ansible
+
+<img width="1216" height="637" alt="image" src="https://github.com/user-attachments/assets/6c30ff81-38bd-41d9-8fc4-ca0f5a31a9f0" />
+
+* Without Ansible , I have to connect to every VM and run bash script to run packages on each VM.
+
 
 Ansible :
 ========
@@ -82,22 +88,6 @@ Ansible :
 • The Main Components of Ansible are Playbooks, Configuration Management and Deployment.
 
 • Ansible uses a playbooks to automate deploy, manage, build, test and configure anything.
-
-## HISTORY:
-
-•	Ansible was first developed in Feb 2012 by Michael Dehaan. 
-
-•	In 2013, Ansible taken over by RedHat.
-
-•	Ansible is available for other OS like Oracle Linux, Debian, CentOS, RHEL.
-
-•	Over the years, Ansible has added many features like security features, support for cloud providers and improved support for windows systems.
-
-•	Now, Ansible is considered one of the leading automation tool in IT industry.
-
-•	Ansible tool is used whether the servers are in On-prem or in the cloud.
-
-•	Ansible turns your code into infrastructure.
 
 ## Ansible Features :
 
