@@ -45,12 +45,33 @@ If we have 100's of machines then Manual Configration Management will be difficu
 Ansible work based on 'Push' Mechanism
 
 Chef & Puppet Tools work based on 'Pull' Mechanism.
-# Ansible
+## Without Ansible
 
-<img width="1216" height="637" alt="image" src="https://github.com/user-attachments/assets/6c30ff81-38bd-41d9-8fc4-ca0f5a31a9f0" />
+<img width="932" height="617" alt="image" src="https://github.com/user-attachments/assets/b7a04472-4cdf-42b3-a01c-81aba7667455" />
 
-* Without Ansible , I have to connect to every VM and run bash script to run packages on each VM.
 
+#  Without Ansible , I have to connect to every VM and run bash script to run packages on each VM.
+
+## With Ansible
+
+<img width="1400" height="705" alt="image" src="https://github.com/user-attachments/assets/6cf09b2b-fa10-493f-b7e0-30419089835a" />
+
+
+#  With Ansible , One File of Script will run on all the VM at one time. 
+By default, Ansible runs tasks in parallel, not one-by-one.
+
+
+• Default parallelism is 5 hosts at a time (forks = 5).
+
+• You can make it run on all 10 VMs at once by adding:
+
+•Without -f 10 → it will run on 5 VMs, then the next 5.
+
+•With -f 10 → it will run on all 10 VMs at the same time.
+
+'''
+ansible-playbook -i hosts script.yml -f 10
+'''
 
 Ansible :
 ========
