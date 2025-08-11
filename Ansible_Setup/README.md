@@ -449,7 +449,7 @@ Giving permissions to Inventory and Root by removing '#'
 
     Example : ansible all[0] --list-hosts 
 ```
-<img width="1443" height="1257" alt="Ansible Full Course _ Zero to Hero 45-30 screenshot" src="https://github.com/user-attachments/assets/bd1fbd73-705f-4233-a716-277e749516b3" />
+<img width="1443" height="500" alt="Ansible Full Course _ Zero to Hero 45-30 screenshot" src="https://github.com/user-attachments/assets/bd1fbd73-705f-4233-a716-277e749516b3" />
 
 
 <img width="2173" height="868" alt="Ansible Full Course _ Zero to Hero 45-52 screenshot" src="https://github.com/user-attachments/assets/c9cdd4cd-1c1c-40ae-ab9e-39f0a7f4430f" />
