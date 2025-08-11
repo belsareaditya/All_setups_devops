@@ -267,7 +267,9 @@ Note: In Inventory file, we can mention Private_IP Address or Hostname also.
 
 <img width="1411" height="416" alt="image" src="https://github.com/user-attachments/assets/9c4fec89-3dd1-43ae-823c-ce520c6cb525" />
 
-# Host file includes the IP Address of Respective VM , Connect the VM with public and private Key to Used .
+## Host file includes the IP Address of Respective VM , Connect the VM with public and private Key to Used .
+## You can give Host IP address of many VMs in this host file.
+
 ```
 
 ## Ungrouped hosts are specifying before any group header like below 
