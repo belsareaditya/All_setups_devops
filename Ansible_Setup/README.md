@@ -45,6 +45,9 @@ If we have 100's of machines then Manual Configration Management will be difficu
 Ansible work based on 'Push' Mechanism
 
 Chef & Puppet Tools work based on 'Pull' Mechanism.
+
+#
+
 ## Without Ansible
 
 <img width="932" height="617" alt="image" src="https://github.com/user-attachments/assets/b7a04472-4cdf-42b3-a01c-81aba7667455" />
@@ -69,9 +72,9 @@ By default, Ansible runs tasks in parallel, not one-by-one.
 
 •With -f 10 → it will run on all 10 VMs at the same time.
 
-'''
+```bash
 ansible-playbook -i hosts script.yml -f 10
-'''
+```
 
 Ansible :
 ========
