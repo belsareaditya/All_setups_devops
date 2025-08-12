@@ -22,11 +22,12 @@
 # Create a user
 sudo useradd deployer
 ```
-### First run: ✅ User is created.
+First run: ✅ User is created.
 
-### Second run: ❌ Script fails – user already exists.
+Second run: ❌ Script fails – user already exists.
 
-**Ansible is idempotent – if the desired state already exists, it won’t make changes.
+
+# Ansible is idempotent – if the desired state already exists, it won’t make changes.
 
 ```bash
 - name: Ensure deployer user exists
