@@ -1,6 +1,6 @@
-# 🛠 Shell Scripts vs. Ansible – When to Use What
+#Shell Scripts vs. Ansible – When to Use What
 
-## 📜 When to Use **Shell Scripts**
+## When to Use **Shell Scripts**
 **Shell Scripting works only for Linux** (platform-dependent).  
 - Becomes **complex and less readable** (especially for non-experts) as script size grows. 
 Shell scripts are quick, lightweight, and available on almost every system.  
@@ -14,6 +14,7 @@ Shell scripts are quick, lightweight, and available on almost every system.
 #!/bin/bash
 # Create a user
 sudo useradd deployer
+```
 
 First run: ✅ User is created.
 Second run: ❌ Script fails – user already exists.
