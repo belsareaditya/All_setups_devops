@@ -23,6 +23,8 @@ db2.example.com
 ansible_user=admin
 ansible_ssh_private_key_file=/path/to/key
 ```
+<img width="1411" height="416" alt="image" src="https://github.com/user-attachments/assets/5a47ab9d-394d-49aa-a0c6-0b0a7edafa71" />
+
 
 ### YAML
 
@@ -43,6 +45,7 @@ all:
         db1.example.com:
         db2.example.com:
 ```
+<img width="1411" height="416" alt="image" src="https://github.com/user-attachments/assets/b8a9cf38-3e49-46a7-a5b5-18a3a91fdcba" />
 
 ## Dynamic Inventory
 
