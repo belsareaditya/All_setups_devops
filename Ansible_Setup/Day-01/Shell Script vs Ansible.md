@@ -14,9 +14,8 @@
 
 ## 🔄 Idempotence and Predictability
 
-**Shell scripts are usually _not idempotent_** – running them multiple times can cause errors or conflicts.
+## Shell scripts are usually _not idempotent_** – running them multiple times can cause errors or conflicts.
 
-### ⚠️ Shell Script Example – Not Idempotent
 ```bash
 #!/bin/bash
 # Create a user
@@ -27,7 +26,7 @@ First run: ✅ User is created.
 Second run: ❌ Script fails – user already exists.
 
 
-# Ansible is idempotent – if the desired state already exists, it won’t make changes.
+## Ansible is idempotent – if the desired state already exists, it won’t make changes.
 
 ```bash
 - name: Ensure deployer user exists
@@ -39,3 +38,7 @@ Second run: ❌ Script fails – user already exists.
         name: deployer
         state: present
 ```
+
+First run: ✅ User is created.
+
+Second run: ✅ No changes made, task is skipped.
