@@ -10,7 +10,271 @@ Vault works across both **On-Premise** and **Cloud** environments (AWS, Azure, G
 ## 🔑 Key Benefits
 - Unified secret management across on-prem and cloud.
 - Centralized source of truth for credentials.
-- Reduces risk of secret sprawl.
+- Reduces risk of secret sprawl.# HashiCorp Vault Cheatsheet
+
+This document provides an introduction, features, benefits, components, and a cheatsheet of commonly used CLI commands with **examples and outputs**.
+
+---
+
+## 📌 Introduction
+HashiCorp Vault is a tool for securely accessing secrets such as API keys, passwords, and certificates. It manages and protects sensitive data in modern infrastructures, across on-prem and cloud environments.
+
+---
+
+## ✅ Key Benefits
+- Works with On-Prem and Cloud (AWS, GCP, Azure, etc.)
+- Centralized secret management
+- Acts as an internal CA for certificate signing
+- Enables fine-grained access control
+
+---
+
+## 🔑 Use Cases
+- Store AWS root credentials
+- Store LDAP passwords
+- Manage MySQL/Postgres root credentials
+- Issue dynamic SSH keys
+- Use Vault as internal CA
+
+---
+
+## 🧩 Core Components
+- **Storage Backends**: Where Vault stores encrypted secrets (e.g., Consul, Raft)
+- **Secret Engines**: Key/Value (KV), PKI, SSH, Database
+- **Authentication Methods**: Userpass, GitHub, LDAP, Okta, Kubernetes
+- **Audit Devices**: File, Syslog, Socket
+
+---
+
+## ⚡ Commonly Used Vault Commands (with Examples)
+
+### 1. Set Environment Variables
+```bash
+export VAULT_ADDR='http://127.0.0.1:8200'
+export VAULT_TOKEN='hvs.xxxxx'
+```
+**Example Output:**
+```bash
+$ echo $VAULT_ADDR
+http://127.0.0.1:8200
+```
+
+---
+
+### 2. Vault Status
+```bash
+vault status
+```
+**Example Output:**
+```
+Key             Value
+---             -----
+Seal Type       shamir
+Initialized     true
+Sealed          false
+Total Shares    5
+Threshold       3
+Version         1.20.2
+Cluster Name    vault-cluster-XXXX
+Cluster ID      XXXXX-XXXX-XXXX-XXXX
+HA Enabled      true
+HA Mode         active
+```
+
+---
+
+### 3. Initialize Vault
+```bash
+vault operator init -key-shares=3 -key-threshold=2
+```
+**Example Output:**
+```
+Unseal Key 1: xxxxx
+Unseal Key 2: yyyyy
+Unseal Key 3: zzzzz
+
+Initial Root Token: s.xxxxx
+```
+
+---
+
+### 4. Unseal Vault
+```bash
+vault operator unseal <unseal-key>
+```
+**Example Output:**
+```
+Key             Value
+---             -----
+Sealed          false
+```
+
+---
+
+### 5. Login to Vault
+```bash
+vault login <root-token>
+```
+**Example Output:**
+```
+Success! You are now authenticated. The token information displayed below is already stored in the token helper.
+```
+
+---
+
+### 6. Enable Userpass Auth
+```bash
+vault auth enable userpass
+```
+**Example Output:**
+```
+Success! Enabled userpass auth method at: userpass/
+```
+
+---
+
+### 7. Create a User
+```bash
+vault write auth/userpass/users/testuser password=pass123 policies=default
+```
+**Example Output:**
+```
+Success! Data written to: auth/userpass/users/testuser
+```
+
+---
+
+### 8. List Authentication Methods
+```bash
+vault auth list
+```
+**Example Output:**
+```
+Path       Type       Description
+----       ----       -----------
+userpass/  userpass   n/a
+```
+
+---
+
+### 9. Enable KV Secrets Engine
+```bash
+vault secrets enable -path=secret kv
+```
+**Example Output:**
+```
+Success! Enabled the kv secrets engine at: secret/
+```
+
+---
+
+### 10. Write a Secret
+```bash
+vault kv put secret/app/config username=admin password=passw0rd
+```
+**Example Output:**
+```
+Key              Value
+---              -----
+created_time     2025-08-17T10:00:00Z
+version          1
+```
+
+---
+
+### 11. Read a Secret
+```bash
+vault kv get secret/app/config
+```
+**Example Output:**
+```
+====== Metadata ======
+Key              Value
+---              -----
+created_time     2025-08-17T10:00:00Z
+version          1
+
+====== Data ======
+Key         Value
+---         -----
+username    admin
+password    passw0rd
+```
+
+---
+
+### 12. Delete a Secret
+```bash
+vault kv delete secret/app/config
+```
+**Example Output:**
+```
+Success! Data deleted (if it existed) at: secret/app/config
+```
+
+---
+
+### 13. List Policies
+```bash
+vault policy list
+```
+**Example Output:**
+```
+default
+root
+```
+
+---
+
+### 14. Write a Policy
+```hcl
+# my-policy.hcl
+path "secret/*" {
+  capabilities = ["create", "read", "update", "delete", "list"]
+}
+```
+```bash
+vault policy write my-policy my-policy.hcl
+```
+**Example Output:**
+```
+Success! Uploaded policy: my-policy
+```
+
+---
+
+### 15. Enable Audit Logging
+```bash
+vault audit enable file file_path=/tmp/vault_audit.log
+```
+**Example Output:**
+```
+Success! Enabled the file audit device at: file/
+```
+
+---
+
+### 16. Example: Using Vault as PKI
+```bash
+vault secrets enable pki
+vault write pki/root/generate/internal common_name="example.com" ttl=8760h
+```
+**Example Output:**
+```
+Key              Value
+---              -----
+certificate      -----BEGIN CERTIFICATE----- ... -----END CERTIFICATE-----
+```
+
+---
+
+## 📌 Notes
+- Always secure unseal keys and root tokens.
+- Enable **Audit Devices** in production.
+- Use **Consul/Raft** for HA storage backend.
+
+---
+
 - Can serve as an **internal Certificate Authority (CA)**.
 
 **Use cases include:**
