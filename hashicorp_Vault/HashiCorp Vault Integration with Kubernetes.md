@@ -108,7 +108,6 @@ kubectl get svc
 kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
 ```
 
-kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
 Data is stored persistently (e.g., in file system, Consul, etc.).
 ---
 
@@ -206,8 +205,8 @@ kubernetes/  kubernetes   auth_kubernetes_abc   n/a
 vault write auth/kubernetes/config \
     kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
-1.You manually specify the Kubernetes API server host/port.
-2.Useful if you’re outside the cluster (like running Vault locally).
+1. You manually specify the Kubernetes API server host/port.
+2. Useful if you’re outside the cluster (like running Vault locally).
 3. Limited — doesn’t automatically verify Kubernetes API via service account credentials
 
 ### ✅ Option 2 (Recommended - In-cluster config):
@@ -221,8 +220,8 @@ vault write auth/kubernetes/config \
 ```
 1. This is the recommended way when Vault runs inside Kubernetes.
 Key differences:
-1.token_reviewer_jwt = Uses the service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) so Vault can call the Kubernetes TokenReview API.
-2.kubernetes_ca_cert = Adds the cluster CA certificate to validate the API server TLS.
+1. token_reviewer_jwt = Uses the service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) so Vault can call the Kubernetes TokenReview API.
+2. kubernetes_ca_cert = Adds the cluster CA certificate to validate the API server TLS.
 3. Still sets kubernetes_host, but with proper auth + TLS validation.
 
 👉 **Example verification:**
