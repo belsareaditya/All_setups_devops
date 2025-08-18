@@ -2,6 +2,8 @@
 
 This guide walks through installing, initializing, and integrating HashiCorp Vault with Kubernetes using Helm, with practical examples for better understanding.
 
+<img width="1920" height="1080" alt="HashiCorp Vault Integration with Kubernetes _ Helm + Secrets + ServiceAccount _ Step-by-Step Demo 0-4 screenshot" src="https://github.com/user-attachments/assets/e692fc5b-f607-4a58-8545-a6801f2b5c7b" />
+
 ---
 
 ## 🚀 Step 1: Install Helm & Deploy Vault
