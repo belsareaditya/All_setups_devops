@@ -49,14 +49,7 @@ vault server -dev
 7. When you stop the process, all data is lost.
 
 ---
-## 2. Vault server in normal mode (with unseal keys)
-In production (normal mode), you start with: 
-
-```bash
-vault server -config=/path/to/config.hcl
-```
-Differences:
-
+## Vault server in normal mode (with unseal keys)
 1. Vault starts in a sealed state.
 
 2. You must initialize Vault first with:
