@@ -171,6 +171,7 @@ EOF
 
 👉 **Example check policy:**
 ```bash
+vault policy list
 vault policy read mysecret
 ```
 ```text
@@ -202,14 +203,27 @@ kubernetes/  kubernetes   auth_kubernetes_abc   n/a
 ### ✅ Option 1 (Manual host):
 
 ```sh
-vault write auth/kubernetes/config    kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
+vault write auth/kubernetes/config \
+    kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
 ```
+1.You manually specify the Kubernetes API server host/port.
+2.Useful if you’re outside the cluster (like running Vault locally).
+3. Limited — doesn’t automatically verify Kubernetes API via service account credentials
 
 ### ✅ Option 2 (Recommended - In-cluster config):
 
 ```sh
-vault write auth/kubernetes/config    token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"    kubernetes_host="https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"    kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+vault write auth/kubernetes/config \
+    token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+    kubernetes_host="https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT" \
+    kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+
 ```
+1. This is the recommended way when Vault runs inside Kubernetes.
+Key differences:
+1.token_reviewer_jwt = Uses the service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) so Vault can call the Kubernetes TokenReview API.
+2.kubernetes_ca_cert = Adds the cluster CA certificate to validate the API server TLS.
+3. Still sets kubernetes_host, but with proper auth + TLS validation.
 
 👉 **Example verification:**
 ```sh
