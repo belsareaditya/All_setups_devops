@@ -36,8 +36,30 @@ NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 ```
+## Note:  Vault server in -dev mode
+```bash
+vault server -dev
+```
+1. It’s meant for local development/testing, not production.
+2. Key differences in -dev mode:
+3. Vault runs entirely in-memory (no data persisted to disk).
+4. It is already initialized (you don’t need to run vault operator init).
+5. Vault is already unsealed (you don’t need unseal keys).
+6. It gives you a root token printed to the console when it starts.
+7. When you stop the process, all data is lost.
 
 ---
+## 2. Vault server in normal mode (with unseal keys)
+In production (normal mode), you start with: 
+
+```bash
+vault server -config=/path/to/config.hcl
+```
+Differences:
+
+1. Vault starts in a sealed state.
+
+2. You must initialize Vault first with:
 
 ## Step 2: Initialize Vault
 
@@ -48,6 +70,13 @@ kubectl exec -it pods/vault-0 -- /bin/sh
 # Initialize Vault
 vault operator init
 ```
+This generates:
+
+1. Multiple Unseal Keys (usually 5, can configure).
+2. One Initial Root Token.
+3. Vault uses Shamir’s Secret Sharing to split the master key into those unseal keys.
+4. To unseal, you must provide a threshold (e.g., 3 out of 5 keys):
+
 
 👉 **Example output:**
 ```text
@@ -78,7 +107,9 @@ Sealed: false
 Total Shares: 5
 Threshold: 3
 ```
+Once threshold is met, Vault becomes unsealed and operational.
 
+Data is stored persistently (e.g., in file system, Consul, etc.).
 ---
 
 ## 🔑 Step 4: Login & Enable Secret Engine
