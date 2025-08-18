@@ -101,7 +101,13 @@ Total Shares: 5
 Threshold: 3
 ```
 Once threshold is met, Vault becomes unsealed and operational.
+## To get access to the Vault UI used port forwarding method in killercoda
 
+```bash
+kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
+```
+
+kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
 Data is stored persistently (e.g., in file system, Consul, etc.).
 ---
 
