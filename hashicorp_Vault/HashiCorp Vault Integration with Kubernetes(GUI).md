@@ -1,8 +1,6 @@
-# 🔐 Vault on Kubernetes using Helm - Complete Integration Guide
+# 🔐 Vault on Kubernetes using Helm - Complete Integration Guide (with ESO Integration)
 
-This guide walks through installing, initializing, and integrating HashiCorp Vault with Kubernetes using Helm, with practical examples for better understanding.
-
-<img width="1920" height="1080" alt="HashiCorp Vault Integration with Kubernetes _ Helm + Secrets + ServiceAccount _ Step-by-Step Demo 0-4 screenshot" src="https://github.com/user-attachments/assets/e692fc5b-f607-4a58-8545-a6801f2b5c7b" />
+This guide walks through installing, initializing, and integrating HashiCorp Vault with Kubernetes using Helm, and extends it with **ESO (External Secrets Operator)** integration.
 
 ---
 
@@ -28,98 +26,46 @@ helm repo update
 helm install vault hashicorp/vault
 ```
 
-👉 **Example output (truncated):**
-```text
-NAME: vault
-LAST DEPLOYED: Mon Aug 14 12:34:56 2025
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-```
-## 🚀  Step 2 : To get access to the Vault UI used port forwarding method in killercoda
+---
+
+## Step 2: Port Forward Vault UI
 
 ```bash
-kubectl get svc
 kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
-
-killer >> expose >> Port 8200
 ```
+Then expose port 8200 in Killercoda or your environment to access the Vault UI.
 
-## 🚀  Step 3: Unseal Vault through (GUI)
-<img width="1716" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
+---
 
-<img width="1788" height="782" alt="image" src="https://github.com/user-attachments/assets/22f138c9-ea02-4f12-8be7-14d83a4dcc39" />
-
-<img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/ce9e92d5-108c-4742-9751-f6b138ba790a" />
-
-## 🚀 Step 4: Login & Enable Secret Engine in GUI
+## Step 3: Initialize Vault
 
 ```bash
-🔐 Enable KV Engine (max version = 3)
-
-1. Secrets Engines → Enable new engine
-2. Select Generic → KV
-3. Path = kv (use lowercase for consistency)
-4. Maximum Versions = 3
-5. Click → Enable Engine
+kubectl exec -it pods/vault-0 -- /bin/sh
+vault operator init
+vault operator unseal <Unseal-Key-1>
+vault operator unseal <Unseal-Key-2>
+vault operator unseal <Unseal-Key-3>
 ```
+
+Login:
 ```bash
-📂 Create a Secret (one secret with 2 key-value pairs)
-
-1. Secrets → kv → Create secret
-2. Path for this secret = my_secrets
-3. Secret Data → Add
-4. Key = admin01 | Value = Aditya , Secret Data → Add
-5. Key = admin03 | Value = Anushree Secret Data → Add
-6. Click → Save
-```
-
-vault login
-```
-# Check Vault status
-vault status
-
-# List enabled secrets engines
-vault secrets list
-
-# Enable KV v2 secrets engine
-vault secrets enable kv-v2
-```
-
-👉 **Example secrets list:**
-```text
-Path      Type     Accessor
-----      ----     --------
-cubbyhole cubbyhole cubbyhole_d1f9...
-sys/      system   system_1234...
+vault login <root-token>
 ```
 
 ---
 
-## Step 5: Store and Retrieve Secret
+## Step 4: Enable KV Secrets Engine
 
 ```bash
-# Store a secret
+vault secrets enable -path=kv-v2 kv-v2
 vault kv put kv-v2/vault-demo/mysecret username=mahesh password=passwd
-
-# Retrieve the secret
-vault kv get kv-v2/vault-demo/mysecret
-```
-
-👉 **Example output:**
-```text
-====== Data ======
-Key         Value
----         -----
-username    mahesh
-password    passwd
 ```
 
 ---
 
-## 🔒 Step 6: Create Read-Only Policy
+## Step 5: Create Policy
 
-```sh
+```hcl
 vault policy write mysecret - << EOF
 path "kv-v2/data/vault-demo/mysecret" {
   capabilities = ["read"]
@@ -127,76 +73,16 @@ path "kv-v2/data/vault-demo/mysecret" {
 EOF
 ```
 
-👉 **Example check policy:**
+---
+
+## Step 6: Enable & Configure Kubernetes Auth
+
 ```bash
-vault policy list
-vault policy read mysecret
-```
-```text
-path "kv-v2/data/vault-demo/mysecret" {
-  capabilities = ["read"]
-}
-```
-
----
-
-## Step 7: Enable Kubernetes Auth Method
-
-```sh
 vault auth enable kubernetes
-vault auth list
+vault write auth/kubernetes/config     token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"     kubernetes_host="https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"     kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 ```
 
-👉 **Example output:**
-```text
-Path         Type         Accessor              Description
-----         ----         --------              -----------
-kubernetes/  kubernetes   auth_kubernetes_abc   n/a
-```
-
----
-
-## ⚙️ Step 8: Configure Kubernetes Auth Backend
-
-### ✅ Option 1 (Manual host):
-
-```sh
-vault write auth/kubernetes/config \
-    kubernetes_host=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
-```
-1. You manually specify the Kubernetes API server host/port.
-2. Useful if you’re outside the cluster (like running Vault locally).
-3. Limited — doesn’t automatically verify Kubernetes API via service account credentials
-
-### ✅ Option 2 (Recommended - In-cluster config):
-
-```sh
-vault write auth/kubernetes/config \
-    token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
-    kubernetes_host="https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT" \
-    kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-
-```
-1. This is the recommended way when Vault runs inside Kubernetes.
-Key differences:
-1. token_reviewer_jwt = Uses the service account token (/var/run/secrets/kubernetes.io/serviceaccount/token) so Vault can call the Kubernetes TokenReview API.
-2. kubernetes_ca_cert = Adds the cluster CA certificate to validate the API server TLS.
-3. Still sets kubernetes_host, but with proper auth + TLS validation.
-
-👉 **Example verification:**
-```sh
-vault read auth/kubernetes/config
-```
-```text
-Key                  Value
----                  -----
-kubernetes_host      https://10.96.0.1:443
-```
-
----
-
-## Step 9: Create Kubernetes Service Account
-
+Create ServiceAccount:
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -204,124 +90,132 @@ metadata:
   name: vault-auth
   namespace: default
 ```
-
 ```bash
 kubectl apply -f service-account.yaml
 ```
 
-👉 **Example check:**
+Create Role:
 ```bash
-kubectl get sa vault-auth
-```
-```text
-NAME         SECRETS   AGE
-vault-auth   1         5s
+vault write auth/kubernetes/role/demo-role     bound_service_account_names=vault-auth     bound_service_account_namespaces=default     policies=mysecret     ttl=1h     audiences="https://kubernetes.default.svc.cluster.local"
 ```
 
 ---
 
-## 🎯 Step 10: Create Vault Role for Kubernetes
+# 🌐 Step 7: Install External Secrets Operator (ESO)
 
-```sh
-vault write auth/kubernetes/role/demo-role    bound_service_account_names=vault-auth    bound_service_account_namespaces=default    policies=mysecret    ttl=1h
-```
-
-👉 **Example check:**
+1. **Add Helm repo & install ESO**
 ```bash
-vault read auth/kubernetes/role/demo-role
+helm repo add external-secrets https://charts.external-secrets.io
+helm repo update
+
+# Install ESO in default namespace
+helm install external-secrets external-secrets/external-secrets
 ```
-```text
-Key     Value
----     -----
-name    demo-role
-policies [mysecret]
+
+2. **Verify ESO pods**
+```bash
+kubectl get pods -l app.kubernetes.io/instance=external-secrets
 ```
 
 ---
 
-## 📦 Pod Manifest Example
+# 🔑 Step 8: Configure SecretStore with Vault
+
+Create `secret-store.yaml`:
 
 ```yaml
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: external-secrets.io/v1beta1
+kind: SecretStore
 metadata:
-  name: vault-demo
+  name: vault-backend
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: vault-check
-  template:
-    metadata:
-      labels:
-        app: vault-check
-    spec:
-      containers:
-        - name: vault-check
-          image: hashicorp/vault:1.15.0
-          command: ["/bin/sh"]
-          args: ["-c", "sleep 3600"]
-          env:
-            - name: VAULT_ADDR
-              value: "http://vault.default.svc.cluster.local:8200"
-            - name: VAULT_SKIP_VERIFY
-              value: "true"
+  provider:
+    vault:
+      server: "http://vault.default.svc:8200"
+      path: "kv-v2"
+      version: "v2"
+      auth:
+        kubernetes:
+          mountPath: "kubernetes"
+          role: "demo-role"
+          serviceAccountRef:
+            name: vault-auth
 ```
 
-👉 **Example check:**
+Apply it:
 ```bash
-kubectl get pods -l app=vault-check
+kubectl apply -f secret-store.yaml
 ```
-```text
-NAME                          READY   STATUS    RESTARTS   AGE
-vault-demo-5f6f8c8c8d-abcde   1/1     Running   0          15s
+
+Check:
+```bash
+kubectl describe secretstore vault-backend
 ```
 
 ---
 
-## Option 2: Pod Authenticates and Fetches Secrets
+# 📜 Step 9: Create ExternalSecret
 
+Create `external-secret.yaml`:
+
+```yaml
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: my-secret-sync
+spec:
+  refreshInterval: 30s
+  secretStoreRef:
+    name: vault-backend
+    kind: SecretStore
+  target:
+    name: synced-secret
+    creationPolicy: Owner
+  data:
+  - secretKey: username
+    remoteRef:
+      key: vault-demo/mysecret
+      property: username
+  - secretKey: password
+    remoteRef:
+      key: vault-demo/mysecret
+      property: password
+```
+
+Apply it:
+```bash
+kubectl apply -f external-secret.yaml
+```
+
+Check synced secret:
+```bash
+kubectl get secret synced-secret -o yaml
+```
+
+👉 Example output:
 ```yaml
 apiVersion: v1
-kind: Pod
+kind: Secret
 metadata:
-  name: vault-demo
-spec:
-  serviceAccountName: vault-auth
-  containers:
-    - name: vault-demo
-      image: badouralix/curl-jq
-      command: ["sh", "-c"]
-      args:
-        - |
-          VAULT_ADDR="http://vault.default.svc.cluster.local:8200"
-
-          echo "Reading service account token..."
-          SA_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-
-          echo "Authenticating to Vault..."
-          LOGIN_RESPONSE=$(curl -s --request POST --data "{\"jwt\": \"${SA_TOKEN}\", \"role\": \"demo-role\"}"             "${VAULT_ADDR}/v1/auth/kubernetes/login")
-
-          VAULT_TOKEN=$(echo $LOGIN_RESPONSE | jq -r '.auth.client_token')
-
-          echo "Fetching secret from Vault..."
-          SECRET=$(curl -s -H "X-Vault-Token: ${VAULT_TOKEN}"             "${VAULT_ADDR}/v1/kv-v2/data/vault-demo/mysecret" | jq -r '.data.data')
-
-          echo "🔑 Secret retrieved:"
-          echo "$SECRET"
-
-          sleep 3600
+  name: synced-secret
+data:
+  username: bWFoZXNo   # base64 encoded
+  password: cGFzc3dk   # base64 encoded
 ```
 
-👉 **Example pod logs:**
-```text
-Reading service account token...
-Authenticating to Vault...
-Fetching secret from Vault...
-🔑 Secret retrieved:
-{
-  "username": "mahesh",
-  "password": "passwd"
-}
-```
+---
 
+# ✅ Simplified Vault Logs (Important Events)
+
+1. Vault started and unsealed ✅  
+2. KV engine enabled ✅  
+3. Kubernetes auth enabled ✅  
+4. ESO installed and connected to Vault ✅  
+5. Secrets synced from Vault into Kubernetes ✅  
+
+---
+
+🎯 **Final Result:**  
+- Vault stores your secrets in `kv-v2/vault-demo/mysecret`  
+- ESO automatically syncs them into a Kubernetes Secret (`synced-secret`)  
+- Your pods can mount/use `synced-secret` just like any other Kubernetes Secret.  
