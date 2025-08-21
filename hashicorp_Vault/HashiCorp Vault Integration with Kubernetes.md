@@ -79,10 +79,8 @@ vault operator unseal <Unseal-Key-3>
 
 ```bash
 vault login <root-or-admin-token>
-
-<img width="536" height="52" alt="image" src="https://github.com/user-attachments/assets/7c1d8d9f-8a50-4e25-a91d-121c309266d3" />
-
 ```
+<img width="536" height="52" alt="image" src="https://github.com/user-attachments/assets/7c1d8d9f-8a50-4e25-a91d-121c309266d3" />
 
 ##  Step 6 : List and Enable Engine
 
