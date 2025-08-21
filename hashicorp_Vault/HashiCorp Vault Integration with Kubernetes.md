@@ -197,6 +197,14 @@ kubernetes_host      https://10.96.0.1:443
 ```
 <img width="1422" height="666" alt="image" src="https://github.com/user-attachments/assets/7880a22d-7c19-45b3-b4d3-f243d5d90e72" />
 
+## Used Kubectl pod command to see the attachment of service account
+
+```sh
+kubectl describe pod/vault-0
+```
+
+<img width="1135" height="142" alt="image" src="https://github.com/user-attachments/assets/ac763223-7d8f-4e56-9758-9abc286e724e" />
+
 ---
 
 ## Step 9: Create Kubernetes Service Account
