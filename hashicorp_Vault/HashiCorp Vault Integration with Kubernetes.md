@@ -101,6 +101,7 @@ vault kv put kv-v2/vault-demo/mysecret username=mahesh password=passwd
 # Retrieve the secret
 vault kv put kv-v2/my_secrets/creds
 ```
+<img width="890" height="262" alt="image" src="https://github.com/user-attachments/assets/0b04b14b-f198-4ddd-8f63-66dedf11eac3" />
 
 👉 **Example output:**
 ```text
