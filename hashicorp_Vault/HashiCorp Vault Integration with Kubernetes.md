@@ -49,7 +49,7 @@ killer >> expose >> Port 8200
 
 2. You must initialize Vault first with:
 
-## Step 2: Initialize Vault
+## Step 2: Initialize Vault(CLI)
 
 ```bash
 # Exec into Vault pod
@@ -58,11 +58,6 @@ kubectl exec -it pods/vault-0 -- /bin/sh
 # Initialize Vault
 vault operator init
 ```
-## Example
-
-<img width="1716" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
-
-
 ## Step 3: For Unsealing Vault (inside CLI)
 
 ```bash
@@ -71,7 +66,7 @@ vault operator unseal <Unseal-Key-2>
 vault operator unseal <Unseal-Key-3>
 ```
 
-👉 **Example output:**
+👉 **Example output:**(CLI)
 ```text
 Seal Type: shamir
 Initialized: true
@@ -80,38 +75,16 @@ Total Shares: 5
 Threshold: 3
 ```
 Once threshold is met, Vault becomes unsealed and operational.
+## Example
 
-## Step 3: Unseal Vault (GUI)
+## Step 3: Unseal Vault through (GUI)
+<img width="1716" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
 
 <img width="1788" height="782" alt="image" src="https://github.com/user-attachments/assets/22f138c9-ea02-4f12-8be7-14d83a4dcc39" />
 
 <img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/ce9e92d5-108c-4742-9751-f6b138ba790a" />
 
 ---
-
-
-
-This generates:
-
-1. Multiple Unseal Keys (usually 5, can configure).
-2. One Initial Root Token.
-3. Vault uses Shamir’s Secret Sharing to split the master key into those unseal keys.
-4. To unseal, you must provide a threshold (e.g., 3 out of 5 keys):
-
-
-👉 **Example output:**
-```text
-Unseal Key 1: K1d3d8hZ0SxjQ2...
-Unseal Key 2: H92jd9sd02kLm2...
-Unseal Key 3: Vdj29skq0WnN7...
-Unseal Key 4: 0Nsl2kdj3Opl9...
-Unseal Key 5: HSkd93nd9Wms0...
-
-Initial Root Token: s.jsk82nd92ksL0...
-```
-
----
-
 
 Data is stored persistently (e.g., in file system, Consul, etc.).
 ---
