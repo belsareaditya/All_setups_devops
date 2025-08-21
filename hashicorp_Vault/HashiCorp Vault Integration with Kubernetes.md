@@ -28,37 +28,30 @@ helm repo update
 helm install vault hashicorp/vault
 ```
 
-👉 **Example output (truncated):**
-```text
-NAME: vault
-LAST DEPLOYED: Mon Aug 14 12:34:56 2025
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-```
-## To get access to the Vault UI used port forwarding method in killercoda
+## Step 2 To get access to the Vault UI used port forwarding method in killercoda
+By Default UI is not acessible in GUI ,so port forwarding is importan.
 
 ```bash
 kubectl get svc
 kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
 
+To expose the port 
 killer >> expose >> Port 8200
 ```
-## Vault server in normal mode (with unseal keys)
+
+## Step 3: Vault server in normal mode (with unseal keys)
 1. Vault starts in a sealed state.
-
-2. You must initialize Vault first with:
-
-## Step 2: Initialize Vault(CLI)
-
+2. You must initialize Vault first with
+   
 ```bash
-# Exec into Vault pod
+# Exec into Vault-0 pod
 kubectl exec -it pods/vault-0 -- /bin/sh
 
 # Initialize Vault
 vault operator init
 ```
-## Step 3: For Unsealing Vault (inside CLI)
+
+## Step 4: For Unsealing Vault (inside CLI)
 
 ```bash
 vault operator unseal <Unseal-Key-1>
@@ -77,10 +70,10 @@ Threshold: 3
 Once threshold is met, Vault becomes unsealed and operational.
 ## Example
 
-## Step 3: Unseal Vault through (GUI)
-<img width="1716" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
+## Step 4 : Unseal Vault through (GUI)
+<img width="2000" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
 
-<img width="1788" height="782" alt="image" src="https://github.com/user-attachments/assets/22f138c9-ea02-4f12-8be7-14d83a4dcc39" />
+<img width="2000" height="782" alt="image" src="https://github.com/user-attachments/assets/22f138c9-ea02-4f12-8be7-14d83a4dcc39" />
 
 <img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/ce9e92d5-108c-4742-9751-f6b138ba790a" />
 
