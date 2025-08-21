@@ -134,6 +134,7 @@ path "kv-v2/data/vault-demo/mysecret" {
   capabilities = ["read"]
 }
 ```
+<img width="1636" height="531" alt="image" src="https://github.com/user-attachments/assets/fea6c6e3-ba2d-49df-8053-9f16d1deb947" />
 
 ---
 
