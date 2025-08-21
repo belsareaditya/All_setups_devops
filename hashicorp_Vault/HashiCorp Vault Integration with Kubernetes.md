@@ -45,10 +45,11 @@ killer >> expose >> Port 8200
 ```bash
 # Exec into Vault-0 pod
 kubectl exec -it pods/vault-0 -- /bin/sh
+```
 
+2. Now initialize the  Vault
+   
 ```bash
-3. Now initialize the  Vault
-
 # Initialize Vault
 vault operator init
 ```
