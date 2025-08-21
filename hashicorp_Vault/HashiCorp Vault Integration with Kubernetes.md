@@ -112,7 +112,7 @@ vault status
 vault secrets list
 
 # Enable KV v2 secrets engine
-vault secrets enable -path=kv-v2 kv-v2
+vault secrets enable kv-v2
 ```
 
 👉 **Example secrets list:**
