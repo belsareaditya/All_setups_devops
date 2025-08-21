@@ -333,7 +333,17 @@ spec:
           sleep 3600
 ```
 
-👉 **Example pod logs:**
+## To see the out of and to retrive the secrets
+
+```bash
+# To see the Logs
+kubectl logs pod/vault-demo
+
+
+#
+```
+
+
 ```text
 Reading service account token...
 Authenticating to Vault...
@@ -344,3 +354,105 @@ Fetching secret from Vault...
   "password": "passwd"
 }
 ```
+## Pod Logs
+
+```bash
+# To see the Logs
+kubectl logs pod/vault-demo
+```
+
+
+# implified Vault Logs (Important Events)
+
+## 1. Vault Starting
+```
+Vault server started!
+```
+- Proxy environment cleared
+- Seal generation = 1
+
+---
+
+## 2. Vault Not Initialized (early loop)
+```
+core: security barrier not initialized
+core: seal configuration missing, not initialized
+```
+➡ Happens before `vault operator init`.
+
+---
+
+## 3. Vault Initialized
+```
+core: security barrier initialized: stored=1 shares=5 threshold=3
+core: post-unseal setup starting
+core: root token generated
+```
+➡ Vault init success (5 keys, threshold 3).
+
+---
+
+## 4. Vault Sealed/Unsealed Cycle
+```
+core: vault is unsealed
+```
+➡ Unseal completed successfully.
+
+---
+
+## 5. System Mounts Loaded
+```
+mounted: cubbyhole/ sys/ identity/ token/
+```
+➡ Default system backends ready.
+
+---
+
+## 6. KV Secrets Engine Enabled
+```
+successful mount: path=kv-v2/ type=kv
+```
+
+---
+
+## 7. Kubernetes Auth Enabled
+```
+enabled credential backend: path=kubernetes/ type=kubernetes
+```
+
+---
+
+## 8. Role Warning (Future Requirement)
+```
+WARN: This role does not have an audience. 
+Vault v1.21+ will require roles to have an audience. role_name=demo-role
+```
+➡ Works now, but needs `audiences` param for future Vault versions.
+
+---
+
+## ✅ Summary
+- Vault started, initialized, and unsealed ✅  
+- Default mounts loaded ✅  
+- KV engine enabled ✅  
+- Kubernetes auth enabled ✅  
+- Role `demo-role` created, but missing `audiences` ⚠️ (just a warning for now)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
