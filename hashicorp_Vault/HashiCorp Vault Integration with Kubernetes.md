@@ -181,6 +181,11 @@ Key differences:
 2. kubernetes_ca_cert = Adds the cluster CA certificate to validate the API server TLS.
 3. Still sets kubernetes_host, but with proper auth + TLS validation.
 
+### To see the variables of Kubernetes. 
+```sh
+printenv
+```
+
 👉 **Example verification:**
 ```sh
 vault read auth/kubernetes/config
