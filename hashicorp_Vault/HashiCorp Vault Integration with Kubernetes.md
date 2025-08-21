@@ -195,6 +195,7 @@ Key                  Value
 ---                  -----
 kubernetes_host      https://10.96.0.1:443
 ```
+<img width="1422" height="666" alt="image" src="https://github.com/user-attachments/assets/7880a22d-7c19-45b3-b4d3-f243d5d90e72" />
 
 ---
 
