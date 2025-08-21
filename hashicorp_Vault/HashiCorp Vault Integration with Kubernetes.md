@@ -77,12 +77,8 @@ Once threshold is met, Vault becomes unsealed and operational.
 
 <img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/ce9e92d5-108c-4742-9751-f6b138ba790a" />
 
----
 
-Data is stored persistently (e.g., in file system, Consul, etc.).
----
-
-## 🔑 Step 4: Login & Enable Secret Engine
+##  Step 5: Login & Enable Secret Engine
 
 ```bash
 # Login to Vault (use your root or unseal token)
@@ -90,7 +86,17 @@ vault login
 
 # Check Vault status
 vault status
+```
+##  Step 6: Access for the CLI
+# Inside pod to get acess to CLI (use your root or unseal token)
 
+```bash
+vault login <root-or-admin-token>
+```
+
+##  Step 7 : List and Enable Engine
+
+```bash
 # List enabled secrets engines
 vault secrets list
 
@@ -98,24 +104,14 @@ vault secrets list
 vault secrets enable kv-v2
 ```
 
-👉 **Example secrets list:**
-```text
-Path      Type     Accessor
-----      ----     --------
-cubbyhole cubbyhole cubbyhole_d1f9...
-sys/      system   system_1234...
-```
-
----
-
-## Step 5: Store and Retrieve Secret
+## Step 8: Store and Retrieve Secret
 
 ```bash
-# Store a secret
+# Creating a secret
 vault kv put kv-v2/vault-demo/mysecret username=mahesh password=passwd
 
 # Retrieve the secret
-vault kv get kv-v2/vault-demo/mysecret
+vault kv put kv-v2/my_secrets/creds
 ```
 
 👉 **Example output:**
