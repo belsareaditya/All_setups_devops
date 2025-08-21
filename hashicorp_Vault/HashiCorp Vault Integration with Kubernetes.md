@@ -36,18 +36,6 @@ NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 ```
-## Note:  Vault server in -dev mode
-```bash
-vault server -dev
-```
-1. It’s meant for local development/testing, not production.
-2. Key differences in -dev mode:
-3. Vault runs entirely in-memory (no data persisted to disk).
-4. It is already initialized (you don’t need to run vault operator init).
-5. Vault is already unsealed (you don’t need unseal keys).
-6. It gives you a root token printed to the console when it starts.
-7. When you stop the process, all data is lost.
-
 ---
 ## Vault server in normal mode (with unseal keys)
 1. Vault starts in a sealed state.
