@@ -44,16 +44,6 @@ kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
 
 killer >> expose >> Port 8200
 ```
-## Example
-
-<img width="1716" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
-
-
-<img width="1788" height="782" alt="image" src="https://github.com/user-attachments/assets/22f138c9-ea02-4f12-8be7-14d83a4dcc39" />
-
-<img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/ce9e92d5-108c-4742-9751-f6b138ba790a" />
-
----
 ## Vault server in normal mode (with unseal keys)
 1. Vault starts in a sealed state.
 
@@ -68,6 +58,39 @@ kubectl exec -it pods/vault-0 -- /bin/sh
 # Initialize Vault
 vault operator init
 ```
+## Example
+
+<img width="1716" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
+
+
+## Step 3: For Unsealing Vault (inside CLI)
+
+```bash
+vault operator unseal <Unseal-Key-1>
+vault operator unseal <Unseal-Key-2>
+vault operator unseal <Unseal-Key-3>
+```
+
+👉 **Example output:**
+```text
+Seal Type: shamir
+Initialized: true
+Sealed: false
+Total Shares: 5
+Threshold: 3
+```
+Once threshold is met, Vault becomes unsealed and operational.
+
+## Step 3: Unseal Vault (GUI)
+
+<img width="1788" height="782" alt="image" src="https://github.com/user-attachments/assets/22f138c9-ea02-4f12-8be7-14d83a4dcc39" />
+
+<img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/ce9e92d5-108c-4742-9751-f6b138ba790a" />
+
+---
+
+
+
 This generates:
 
 1. Multiple Unseal Keys (usually 5, can configure).
@@ -89,23 +112,6 @@ Initial Root Token: s.jsk82nd92ksL0...
 
 ---
 
-## Step 3: Unseal Vault
-
-```bash
-vault operator unseal <Unseal-Key-1>
-vault operator unseal <Unseal-Key-2>
-vault operator unseal <Unseal-Key-3>
-```
-
-👉 **Example output:**
-```text
-Seal Type: shamir
-Initialized: true
-Sealed: false
-Total Shares: 5
-Threshold: 3
-```
-Once threshold is met, Vault becomes unsealed and operational.
 
 Data is stored persistently (e.g., in file system, Consul, etc.).
 ---
