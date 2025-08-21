@@ -229,15 +229,21 @@ kubectl get sa vault-auth
 NAME         SECRETS   AGE
 vault-auth   1         5s
 ```
-Example
+Example : To see all the sa (service account)
 <img width="1375" height="246" alt="image" src="https://github.com/user-attachments/assets/e552d3f7-3954-40e5-9391-94fceb591043" />
 
 ---
 
 ## 🎯 Step 10: Create Vault Role for Kubernetes
 
+### clean multiline format (using \ for line continuation):
 ```sh
-vault write auth/kubernetes/role/demo-role    bound_service_account_names=vault-auth    bound_service_account_namespaces=default    policies=mysecret    ttl=1h
+vault write auth/kubernetes/role/demo-role \
+    bound_service_account_names=vault-auth \
+    bound_service_account_namespaces=default \
+    policies=mysecret \
+    ttl=1h
+
 ```
 
 👉 **Example check:**
