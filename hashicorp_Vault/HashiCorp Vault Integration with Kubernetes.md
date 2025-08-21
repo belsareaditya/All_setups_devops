@@ -39,19 +39,21 @@ To expose the port
 killer >> expose >> Port 8200
 ```
 
-## Step 3: Vault server in normal mode (with unseal keys)
-1. Vault starts in a sealed state.
-2. You must initialize Vault first with
+## Step 3: To create Seal keys and Token first you have get into the pod.
+1. Exec into the pod , to create kyes there.
    
 ```bash
 # Exec into Vault-0 pod
 kubectl exec -it pods/vault-0 -- /bin/sh
 
+```bash
+3. Now initialize the  Vault
+
 # Initialize Vault
 vault operator init
 ```
 
-## Step 4: For Unsealing Vault (inside CLI)
+## Step 4: After initiazing , keys are 
 
 ```bash
 vault operator unseal <Unseal-Key-1>
