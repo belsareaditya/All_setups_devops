@@ -53,8 +53,9 @@ kubectl exec -it pods/vault-0 -- /bin/sh
 # Initialize Vault
 vault operator init
 ```
+<img width="880" height="191" alt="image" src="https://github.com/user-attachments/assets/cdc8d896-2d7e-45f0-897a-82c6ec9b816f" />
 
-## Step 4: After initiazing , keys are 
+## Step 4: After initiazing , Unseals the key with below command.
 
 ```bash
 vault operator unseal <Unseal-Key-1>
@@ -62,18 +63,8 @@ vault operator unseal <Unseal-Key-2>
 vault operator unseal <Unseal-Key-3>
 ```
 
-👉 **Example output:**(CLI)
-```text
-Seal Type: shamir
-Initialized: true
-Sealed: false
-Total Shares: 5
-Threshold: 3
-```
-Once threshold is met, Vault becomes unsealed and operational.
-## Example
-
 ## Step 4 : Unseal Vault through (GUI)
+
 <img width="2000" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
 
 <img width="2000" height="782" alt="image" src="https://github.com/user-attachments/assets/22f138c9-ea02-4f12-8be7-14d83a4dcc39" />
@@ -81,23 +72,16 @@ Once threshold is met, Vault becomes unsealed and operational.
 <img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/ce9e92d5-108c-4742-9751-f6b138ba790a" />
 
 
-##  Step 5: Login & Enable Secret Engine
+##  Step 5: After the Un unsealing through CLI Login & Enable Secret Engine
 
-```bash
-# Login to Vault (use your root or unseal token)
-vault login
 
-# Check Vault status
-vault status
-```
-##  Step 6: Access for the CLI
-# Inside pod to get acess to CLI (use your root or unseal token)
+# Access for the CLI (use your root or unseal token)
 
 ```bash
 vault login <root-or-admin-token>
 ```
 
-##  Step 7 : List and Enable Engine
+##  Step 6 : List and Enable Engine
 
 ```bash
 # List enabled secrets engines
