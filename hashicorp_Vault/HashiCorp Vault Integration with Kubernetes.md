@@ -36,6 +36,23 @@ NAMESPACE: default
 STATUS: deployed
 REVISION: 1
 ```
+## To get access to the Vault UI used port forwarding method in killercoda
+
+```bash
+kubectl get svc
+kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
+
+killer >> expose >> Port 8200
+```
+## Example
+
+<img width="1716" height="745" alt="image" src="https://github.com/user-attachments/assets/413b0ba0-7b3c-4133-a6b3-db2a6e6c690f" />
+
+
+<img width="1788" height="782" alt="image" src="https://github.com/user-attachments/assets/22f138c9-ea02-4f12-8be7-14d83a4dcc39" />
+
+<img width="1918" height="923" alt="image" src="https://github.com/user-attachments/assets/ce9e92d5-108c-4742-9751-f6b138ba790a" />
+
 ---
 ## Vault server in normal mode (with unseal keys)
 1. Vault starts in a sealed state.
@@ -89,12 +106,6 @@ Total Shares: 5
 Threshold: 3
 ```
 Once threshold is met, Vault becomes unsealed and operational.
-## To get access to the Vault UI used port forwarding method in killercoda
-
-```bash
-kubectl get svc
-kubectl port-forward svc/vault 8200:8200 --address=0.0.0.0
-```
 
 Data is stored persistently (e.g., in file system, Consul, etc.).
 ---
