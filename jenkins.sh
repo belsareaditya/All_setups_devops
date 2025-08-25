@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Install OpenJDK 17 JRE Headless
-sudo apt install openjdk-17-jre-headless -y
+# Install OpenJDK 21 JRE Headless
+sudo apt-get install -y openjdk-21-jre-headless
 
 # Download Jenkins GPG key
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
