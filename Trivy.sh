@@ -1,6 +1,21 @@
-wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.tar.gz
-tar zxvf trivy_0.18.3_Linux-64bit.tar.gz
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Variables
+TRIVY_VERSION="0.18.3"
+TRIVY_PKG="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+
+# Download Trivy release
+wget -q "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${TRIVY_PKG}"
+
+# Extract
+tar -xzf "${TRIVY_PKG}"
+
+# Move binary to /usr/local/bin (already in PATH)
 sudo mv trivy /usr/local/bin/
-vim .bashrc
-export PATH=$PATH:/usr/local/bin/
-source .bashrc 
+
+# Cleanup
+rm -f "${TRIVY_PKG}"
+
+# Verify installation
+trivy --version
