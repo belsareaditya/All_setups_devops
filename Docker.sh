@@ -23,4 +23,12 @@ sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 # Update package manager repositories
 sudo apt-get update
 
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin 
+# Install Docker Engine, CLI, containerd and plugins
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# --- Added Part ---
+# Enable and start Docker service
+sudo systemctl enable --now docker
+
+# Show Docker service status
+sudo systemctl status docker --no-pager
