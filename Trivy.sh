@@ -19,3 +19,6 @@ rm -f "${TRIVY_PKG}"
 
 # Verify installation
 trivy --version
+
+# Final message
+echo "✅ Trivy ${TRIVY_VERSION} installed successfully! - Aditya 🚀"
