@@ -32,3 +32,16 @@ sudo systemctl enable --now docker
 
 # Show Docker service status
 sudo systemctl status docker --no-pager
+
+# Add current user to docker group
+sudo usermod -aG docker "$USER"
+
+# Refresh group membership in current shell
+newgrp docker <<EONG
+echo "✅ Docker group refreshed for user: $USER"
+docker --version
+docker ps
+docker run --rm hello-world || true
+EONG
+
+echo "✅ Docker installed and configured successfully for user: $USER 🚀"
