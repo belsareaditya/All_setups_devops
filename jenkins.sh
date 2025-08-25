@@ -1,7 +1,17 @@
 #!/bin/bash
+set -euo pipefail
 
-# Install OpenJDK 17 JRE Headless
-sudo apt install openjdk-17-jre-headless -y
+# Update system
+sudo apt-get update -y
+
+# Install the latest OpenJDK (provided by Ubuntu as default-jdk)
+sudo apt-get install -y default-jdk
+
+# Show installed Java version
+echo "------------------------------------"
+java -version
+echo "✅ Java installed successfully!"
+echo "------------------------------------"
 
 # Download Jenkins GPG key
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
@@ -12,12 +22,17 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
 
-# Update package manager repositories
-sudo apt-get update
+# Update repositories
+sudo apt-get update -y
 
 # Install Jenkins
-sudo apt-get install jenkins -y
+sudo apt-get install -y jenkins
 
-#STEP-4: RESTARTING JENKINS (when we download service it will on stopped state)
-systemctl start jenkins.service
-systemctl status jenkins.service
+# Enable and start Jenkins service
+sudo systemctl enable --now jenkins.service
+
+# Show Jenkins status
+echo "------------------------------------"
+systemctl status jenkins.service --no-pager
+echo "✅ Jenkins installed and running!"
+echo "------------------------------------"
