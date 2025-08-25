@@ -1,24 +1,23 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
 
-# Variables
-TRIVY_VERSION="0.18.3"
-TRIVY_PKG="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+# Install prerequisites
+sudo apt-get update
+sudo apt-get install -y wget apt-transport-https gnupg lsb-release
 
-# Download Trivy release
-wget -q "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${TRIVY_PKG}"
+# Add Aqua Security’s Trivy repo key
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
+  | gpg --dearmor \
+  | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
 
-# Extract
-tar -xzf "${TRIVY_PKG}"
+# Add Trivy apt repo
+echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" \
+  | sudo tee /etc/apt/sources.list.d/trivy.list
 
-# Move binary to /usr/local/bin (already in PATH)
-sudo mv trivy /usr/local/bin/
+# Update repos and install Trivy
+sudo apt-get update
+sudo apt-get install -y trivy
 
-# Cleanup
-rm -f "${TRIVY_PKG}"
-
-# Verify installation
+# Verify
 trivy --version
 
-# Final message
-echo "✅ Trivy ${TRIVY_VERSION} installed successfully! - Aditya 🚀"
+echo "✅ Trivy installed successfully via apt repo - Aditya 🚀"
