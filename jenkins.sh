@@ -1,8 +1,8 @@
 # Update package index
-sudo apt update
+sudo apt update -y
 
 # Install Java runtime dependencies required by Jenkins (OpenJDK 21 + fontconfig)
-sudo apt install fontconfig openjdk-21-jre
+sudo apt install -y fontconfig openjdk-21-jre
 
 # Verify Java installation
 java -version
@@ -18,7 +18,7 @@ echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
 
 # Refresh package index with the newly added Jenkins repository
-sudo apt-get update
+sudo apt-get update -y
 
-# Install Jenkins
-sudo apt-get install jenkins
+# Install Jenkins automatically without confirmation
+sudo apt-get install -y jenkins
