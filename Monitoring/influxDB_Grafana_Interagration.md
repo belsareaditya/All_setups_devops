@@ -22,7 +22,7 @@ It is widely used in **IoT, DevOps monitoring, finance, and healthcare**.
 
 ---
 
-## ⚙️ Step 1: Install InfluxDB
+## Step 1: Install InfluxDB
 
 ### Update Ubuntu system
 
@@ -62,6 +62,7 @@ sudo service influxdb status
 ```
 
 Allow external access (Port 8086):
+or open open port 8086 in your security groups
 
 ```bash
 sudo ufw allow 8086/tcp
@@ -69,7 +70,7 @@ sudo ufw allow 8086/tcp
 
 ---
 
-## ⚙️ Step 2: Install Telegraf
+## Step 2: Install Telegraf
 
 Telegraf is a plugin-driven agent that collects metrics and writes them to InfluxDB.
 
@@ -88,6 +89,8 @@ Edit configuration:
 
 ```bash
 sudo vim /etc/telegraf/telegraf.conf
+
+make uncomment the url and add your influx db host ip.
 ```
 
 Start Telegraf:
@@ -99,7 +102,7 @@ sudo systemctl enable telegraf
 
 ---
 
-## ⚙️ Step 3: Install Grafana
+## Step 3: Install Grafana
 
 Grafana is used for **visualizing metrics stored in InfluxDB**.
 
@@ -131,7 +134,7 @@ Default login: **admin / admin** (you’ll be prompted to change password).
 
 ---
 
-## 🚀 Step 4: Connect InfluxDB to Grafana
+## Step 4: Connect InfluxDB to Grafana
 
 1. Log in to Grafana.
 2. Go to **Configuration → Data Sources**.
@@ -146,7 +149,7 @@ Default login: **admin / admin** (you’ll be prompted to change password).
 
 ---
 
-## 🔧 Example: Writing & Querying Data
+## Example: Writing & Querying Data
 
 ### 1. Write Data to InfluxDB
 
