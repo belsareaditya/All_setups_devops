@@ -1,72 +1,67 @@
-# InfluxDB Installation and Setup on Ubuntu
+# 📊 InfluxDB, Telegraf, and Grafana Installation & Integration on Ubuntu (20.04 / 22.04)
 
 ## What is InfluxDB?
 
-InfluxDB is a **time-series database (TSDB)** optimized for time-series data. These are metrics or events tracked, monitored, and aggregated over time. Examples include:
+**InfluxDB** is a **time-series database (TSDB)** optimized for metrics, events, and logs tracked over time.
+
+Examples of time-series data include:
 
 * Server metrics
-* Web application performance monitoring
-* Sensor/IoT data
-* Financial or healthcare analytics
+* Application performance monitoring
+* IoT sensor data
+* Financial & healthcare analytics
 
-InfluxDB uses a SQL-like query language called **InfluxQL** and provides a built-in HTTP API for writing, reading, and managing data. It integrates with tools like **Grafana**, **Telegraf**, and **Kapacitor** for monitoring and analytics.
+👉 InfluxDB provides:
+
+* **InfluxQL** (SQL-like query language)
+* **Built-in HTTP API** for writing/reading data
+* Integrations with **Grafana, Telegraf, and Kapacitor**
+* **High performance & scalability**
+
+It is widely used in **IoT, DevOps monitoring, finance, and healthcare**.
 
 ---
 
-## Installation of InfluxDB on Ubuntu 20.04/22.04
+## ⚙️ Step 1: Install InfluxDB
 
-### Step 1: Update System
+### Update Ubuntu system
 
 ```bash
 sudo apt-get update
 ```
 
-### Step 2: Add InfluxData Repository
+### Add InfluxDB Repository Key
 
 ```bash
 wget -q https://repos.influxdata.com/influxdata-archive_compat.key
-echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
-echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
+echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c \
+&& cat influxdata-archive_compat.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+
+echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' \
+| sudo tee /etc/apt/sources.list.d/influxdata.list
 ```
 
-### Step 3: Install InfluxDB
+### Install InfluxDB
 
 ```bash
 sudo apt-get update
-sudo apt-get install influxdb2
+sudo apt-get install influxdb2 -y
 ```
 
-### Step 4: Check InfluxDB Version
-
-```bash
-influx version
-```
-
-### Step 5: Start and Enable InfluxDB Service
+### Start & Enable InfluxDB Service
 
 ```bash
 sudo systemctl start influxdb
 sudo systemctl enable influxdb
 ```
 
-Verify InfluxDB is running:
+Check status:
 
 ```bash
 sudo service influxdb status
 ```
 
-Restart/Stop commands:
-
-```bash
-sudo service influxdb restart
-sudo service influxdb stop
-```
-
----
-
-## Firewall Configuration
-
-Allow TCP traffic on InfluxDB default port (8086):
+Allow external access (Port 8086):
 
 ```bash
 sudo ufw allow 8086/tcp
@@ -74,75 +69,126 @@ sudo ufw allow 8086/tcp
 
 ---
 
-## Setting up InfluxDB
+## ⚙️ Step 2: Install Telegraf
 
-### Option 1: Web UI Setup
-
-1. Visit: [http://localhost:8086](http://localhost:8086)
-2. Click **Get Started**
-3. Create:
-
-   * Username
-   * Password
-   * Organization
-   * Bucket
-
-### Option 2: CLI Setup
-
-InfluxDB can also be configured using the command-line interface.
-
----
-
-## Installing Telegraf (Metrics Collector)
-
-Telegraf is an agent for collecting and reporting metrics to InfluxDB.
-
-### Step 1: Add Repository
+Telegraf is a plugin-driven agent that collects metrics and writes them to InfluxDB.
 
 ```bash
 curl --silent --location -O https://repos.influxdata.com/influxdata-archive.key
 gpg --show-keys --with-fingerprint --with-colons ./influxdata-archive.key 2>&1 \
 | grep -q '^fpr:\+24C975CBA61A024EE1B631787C3D57159FC2F927:$' \
-&& cat influxdata-archive.key \
-| gpg --dearmor \
-| sudo tee /etc/apt/keyrings/influxdata-archive.gpg > /dev/null \
+&& cat influxdata-archive.key | gpg --dearmor | sudo tee /etc/apt/keyrings/influxdata-archive.gpg > /dev/null \
 && echo 'deb [signed-by=/etc/apt/keyrings/influxdata-archive.gpg] https://repos.influxdata.com/debian stable main' \
 | sudo tee /etc/apt/sources.list.d/influxdata.list
+
+sudo apt-get update && sudo apt-get install telegraf -y
 ```
 
-### Step 2: Install Telegraf
+Edit configuration:
 
 ```bash
-sudo apt-get update && sudo apt-get install telegraf
+sudo vim /etc/telegraf/telegraf.conf
 ```
 
-### Step 3: Configure Telegraf
-
-Edit config file:
+Start Telegraf:
 
 ```bash
-sudo nano /etc/telegraf/telegraf.conf
-```
-
-Example output section to send data to InfluxDB:
-
-```toml
-[[outputs.influxdb_v2]]
-  urls = ["http://localhost:8086"]
-  token = "YOUR_INFLUXDB_TOKEN"
-  organization = "YOUR_ORG"
-  bucket = "YOUR_BUCKET"
-```
-
-Restart Telegraf:
-
-```bash
-sudo systemctl restart telegraf
+sudo systemctl start telegraf
+sudo systemctl enable telegraf
 ```
 
 ---
 
-✅ You now have **InfluxDB 2.x installed and running** on Ubuntu with **Telegraf** configured to collect metrics.
+## ⚙️ Step 3: Install Grafana
+
+Grafana is used for **visualizing metrics stored in InfluxDB**.
+
+### Add Grafana Repository
+
+```bash
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+```
+
+### Install Grafana
+
+```bash
+sudo apt-get update
+sudo apt-get install grafana -y
+```
+
+### Start & Enable Grafana
+
+```bash
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+```
+
+Access Grafana at: [http://localhost:3000](http://localhost:3000)
+Default login: **admin / admin** (you’ll be prompted to change password).
+
+---
+
+## 🚀 Step 4: Connect InfluxDB to Grafana
+
+1. Log in to Grafana.
+2. Go to **Configuration → Data Sources**.
+3. Select **InfluxDB**.
+4. Enter:
+
+   * **URL**: `http://localhost:8086`
+   * **Organization**: `myorg`
+   * **Token**: `MY_TOKEN`
+   * **Bucket**: `testdb`
+5. Click **Save & Test**.
+
+---
+
+## 🔧 Example: Writing & Querying Data
+
+### 1. Write Data to InfluxDB
+
+```bash
+influx write --bucket testdb --org myorg --token MY_TOKEN \
+'weather,location=delhi temperature=32,humidity=60'
+```
+
+### 2. Query Data (Flux)
+
+```bash
+influx query '
+from(bucket:"testdb")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r._measurement == "weather")
+'
+```
+
+### 3. Visualize in Grafana
+
+* Create a new **Dashboard**.
+* Add a **Panel**.
+* Choose **InfluxDB (Flux)** as the data source.
+* Run a Flux query to fetch metrics (e.g., temperature).
+* Save the dashboard.
+
+✅ Example Grafana graph will show `temperature` and `humidity` trends for location *Delhi*.
+
+---
+
+# ✅ Conclusion
+
+You have successfully installed and integrated:
+
+* **InfluxDB** (time-series database)
+* **Telegraf** (metrics collection)
+* **Grafana** (visualization)
+
+Now you can write metrics to InfluxDB, collect system stats via Telegraf, and build real-time dashboards with Grafana.
+
+---
+
 
 
 <img width="1100" height="545" alt="image" src="https://github.com/user-attachments/assets/068ab963-d038-4080-91d8-67269e0da2e2" />
